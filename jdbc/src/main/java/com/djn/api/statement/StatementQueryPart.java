@@ -1,11 +1,9 @@
 package com.djn.api.statement;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -16,7 +14,10 @@ import java.util.Properties;
 
 /**
  * @author djn
- * 使用statement做静态查询
+ * Description: 使用statement做静态查询
+ *
+ * TODO:
+ *      运行下面的例子时先调一下jdbc.properties中的dbUrl
  */
 public class StatementQueryPart {
     /**
@@ -52,6 +53,7 @@ public class StatementQueryPart {
              * 6. 子类调用会触发父类的静态代码块
              * . 触发类的入口方法main
              */
+
             // 推荐这种方式，这样可以通过变动参数，就加载不同版本/数据库的驱动
             // 可以把参数提取到外部的配置文件
             Class.forName(driver);
@@ -93,11 +95,13 @@ public class StatementQueryPart {
             /**
              * 着重executeQuery和excuteUpdate
              */
-            String sql = "select employee_id, last_name, email, salary from employees;";
+            String last_name = "King";
+            String em = "SKING";
+            String sql = "select employee_id, last_name, email, salary from employees WHERE last_name = '" + last_name + "' AND email = '" + em + "';";
             // DQL常使用
             ResultSet resultSet = statement.executeQuery(sql);
-            // DML语句会返回影响的行数, 非DML会返回0
-            int i = statement.executeUpdate(sql);
+            // DML语句会返回影响的行数, 非DML会返回0, DQL会返回结果集这个就会抛异常
+//            int i = statement.executeUpdate(sql);
 
             //5. 结果集解析
             // 先判断有没有下一行数据，有就可以获取

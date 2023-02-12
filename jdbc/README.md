@@ -5,11 +5,20 @@ JDBC是一种典型的面向接口编程
 jdk下的jdbc规范接口存储在java.sql和javax.sql包中
 
 ## jdbc api使用路线
-1. 静态SQL(没有动态值语句), 这种方式可能发生注入攻击
+1. 静态SQL(没有动态值语句), 不需要动态语句的时候可以使用
 > DriverManger -> Connection -> Statement -> ResultSet
+
+存在的问题: 
+- 这种方式在动态拼接字符串的过程中可能发生注入攻击
+- SQL语句需要拼接字符串比较麻烦
+- 只能拼接字符串类型，其他数据库类型无法处理
+
 
 2. 预编译SQL路线(有动态值语句)
 > DriverManager -> Connection -> PreparedStatement -> ResultSet
+
+通过对sql字符串中占位符？进行替换编译sql， 能够提前获取sql的结构防止注入攻击
+推荐使用
 
 3. 执行标准存储过程SQL路线
 > DriverManager -> Collection -> CallableStatement -> ResultSet
